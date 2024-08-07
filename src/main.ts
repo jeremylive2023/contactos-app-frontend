@@ -5,9 +5,13 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { routes } from './app/app-routing.module'; // Ensure this path is correct
 
+// Bootstrap the Angular application
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(RouterModule.forRoot(routes)),
-    importProvidersFrom(HttpClientModule) // Include HttpClientModule
+    // Import RouterModule and HttpClientModule
+    importProvidersFrom(
+      RouterModule.forRoot(routes),
+      HttpClientModule
+    )
   ]
-}).catch(err => console.error(err));
+}).catch(err => console.error('Error bootstrapping the application', err));

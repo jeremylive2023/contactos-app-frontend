@@ -1,12 +1,12 @@
 export interface Contact {
-  id: number;
+  id?: number;
   name: string;
   phoneNumber: string;
-  userId: string;
+  userId?: string;
 }
 
 export interface User {
-  id: string;
+  id?: string;
   username: string;
   password: string;
 }

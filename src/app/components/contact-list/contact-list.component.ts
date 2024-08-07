@@ -1,20 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ContactService } from '../../services/contact.service';
-import { Contact } from '../../models/contact.model';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, RouterModule, CommonModule, MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule]
 })
 export class ContactListComponent implements OnInit {
-  contacts: Contact[] = [];
+  contacts: any[] = [];
 
-  constructor(private contactService: ContactService, private router: Router) { }
+  constructor(private contactService: ContactService) { }
 
   ngOnInit() {
     this.loadContacts();
@@ -22,29 +32,23 @@ export class ContactListComponent implements OnInit {
 
   loadContacts() {
     this.contactService.getContacts().subscribe(
-      contacts => this.contacts = contacts,
-      error => console.error('Error loading contacts', error)
+      (data) => {
+        this.contacts = data;
+      },
+      (error) => {
+        console.error('Error fetching contacts', error);
+      }
     );
-  }
-
-  addNewContact() {
-    this.router.navigate(['/contacts/new']);
-  }
-
-  editContact(id: number | undefined) {
-    if (id !== undefined) {
-      this.router.navigate(['/contacts/edit', id]);
-    } else {
-      console.error('Contact ID is undefined');
-    }
   }
 
   deleteContact(id: number) {
     this.contactService.deleteContact(id).subscribe(
       () => {
-        this.contacts = this.contacts.filter(contact => contact.id !== id);
+        this.loadContacts();
       },
-      error => console.error('Error deleting contact', error)
+      (error) => {
+        console.error('Error deleting contact', error);
+      }
     );
   }
 }

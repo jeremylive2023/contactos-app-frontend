@@ -1,11 +1,21 @@
-<div class="contact-list">
-    <h2>Contacts</h2>
-    <button (click)="addNewContact()">Add New Contact</button>
-    <ul>
-      <li *ngFor="let contact of contacts">
-        {{ contact.name }} - {{ contact.phoneNumber }}
-        <button *ngIf="contact.id !== undefined" (click)="editContact(contact.id)">Edit</button>
-        <button *ngIf="contact.id !== undefined" (click)="deleteContact(contact.id)">Delete</button>
-      </li>
-    </ul>
-  </div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Contacts</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let contact of contacts">
+        {{contact.name}} - {{contact.phoneNumber}}
+        <button mat-icon-button [routerLink]="['/contacts/edit', contact.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteContact(contact.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" routerLink="/contacts/new">Add Contact</button>
+  </mat-card-actions>
+</mat-card>

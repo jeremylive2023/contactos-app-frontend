@@ -1,39 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Contact } from '../models/contact.model';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = '/api/contacts';
+  private apiUrl = 'http://localhost:5201/api/contacts';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   private getHeaders(): HttpHeaders {
-    const token = this.authService.currentUserValue?.token;
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.authService.getAuthHeaders();
   }
 
-  getContacts(): Observable<Contact[]> {
-    return this.http.get<Contact[]>(this.apiUrl, { headers: this.getHeaders() });
+  getContacts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  getContact(id: number): Observable<Contact> {
-    return this.http.get<Contact>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  getContact(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
-  addContact(contact: Contact): Observable<Contact> {
-    return this.http.post<Contact>(this.apiUrl, contact, { headers: this.getHeaders() });
+  createContact(contact: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, contact, { headers: this.getHeaders() });
   }
 
-  updateContact(contact: Contact): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${contact.id}`, contact, { headers: this.getHeaders() });
+  updateContact(id: number, contact: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, contact, { headers: this.getHeaders() });
   }
 
   deleteContact(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.delete<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
-} 
+}
