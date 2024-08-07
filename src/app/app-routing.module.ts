@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
-const routes: Routes = [
+export const routes: Routes = [
   { 
     path: 'login', 
     loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)

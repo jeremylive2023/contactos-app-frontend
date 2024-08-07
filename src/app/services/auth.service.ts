@@ -18,8 +18,11 @@ export class AuthService {
   }
 
   private getStoredUser(): any {
-    const storedUser = localStorage.getItem('currentUser');
-    return storedUser ? JSON.parse(storedUser) : null;
+    if (typeof localStorage !== 'undefined') {
+      const storedUser = localStorage.getItem('currentUser');
+      return storedUser ? JSON.parse(storedUser) : null;
+    }
+    return null;
   }
 
   public get currentUserValue() {
