@@ -10,6 +10,8 @@ import { ContactListComponent } from './components/contact-list/contact-list.com
 import { ContactEditComponent } from './components/contact-edit/contact-edit.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +22,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule
